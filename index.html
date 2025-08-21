@@ -13,8 +13,9 @@
     <meta property="og:url" content="your-website-url">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="canonical" href="your-website-url">
-    <title>Healthcare ID Badge Generator | Free Online Tool for Medical Staff</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Sehatra | Healthcare ID Badge Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #1e3799;
@@ -23,8 +24,9 @@
             --danger-color: #e74c3c;
             --light-gray: #f8f9fa;
             --dark-gray: #343a40;
-            --border-radius: 8px;
-            --box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --border-radius: 15px;
+            --box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -35,43 +37,80 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: #f0f2f5;
+            background: linear-gradient(135deg, #f0f2f5, #e6e9f0);
             min-height: 100vh;
             padding: 2rem;
             color: var(--text-color);
+            background-attachment: fixed;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 2rem;
+            grid-template-columns: 380px 1fr;
+            gap: 2.5rem;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
+                margin: 1rem;
+                border-radius: 15px;
             }
         }
 
         .header {
             text-align: center;
             margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), #2980b9);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');
+            z-index: 1;
         }
 
         .header h1 {
-            color: var(--text-color);
-            font-size: 1.8rem;
+            color: white;
+            font-size: 2.2rem;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
         }
 
         .form-section {
-            background: white;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+            background: #f9fafb;
+            padding: 2rem;
+            border-radius: 0;
+            position: relative;
+            z-index: 2;
+            border-right: 1px solid #e9ecef;
         }
 
         .template-selector {
@@ -79,28 +118,62 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
             margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .template-option {
             cursor: pointer;
-            padding: 0.5rem;
+            padding: 0.75rem;
             border: 2px solid #dee2e6;
             border-radius: var(--border-radius);
             text-align: center;
-            transition: all 0.2s;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            background: white;
         }
 
         .template-option:hover {
             border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 55, 153, 0.1);
         }
 
         .template-option.active {
             border-color: var(--primary-color);
             background: rgba(30, 55, 153, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 55, 153, 0.15);
+        }
+
+        .template-option::after {
+            content: '✓';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .template-option.active::after {
+            opacity: 1;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
+            position: relative;
         }
 
         .form-group label {
@@ -108,97 +181,175 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: var(--dark-gray);
+            font-size: 0.95rem;
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.85rem;
             border: 1px solid #dee2e6;
             border-radius: var(--border-radius);
-            font-size: 0.9rem;
-            transition: border-color 0.2s;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
 
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(30, 55, 153, 0.1);
+            box-shadow: 0 0 0 3px rgba(30, 55, 153, 0.1);
         }
 
         .file-upload {
             background: var(--light-gray);
-            padding: 2rem;
+            padding: 1.2rem;
             border-radius: var(--border-radius);
             text-align: center;
             border: 2px dashed #ccc;
             cursor: pointer;
             margin-bottom: 1.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
         .file-upload:hover {
             border-color: var(--primary-color);
+            background: rgba(30, 55, 153, 0.05);
+        }
+
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-text {
+            color: #6c757d;
+            font-size: 0.9rem;
         }
 
         /* Badge Templates */
+        .badge-container {
+            position: relative;
+            width: 350px;
+            height: 550px;
+            margin: 0 auto;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
         .badge {
             width: 350px;
-            height: 600px;
+            height: 550px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            transition: transform 0.6s ease;
+            transform-style: preserve-3d;
+            background: white;
             padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .badge-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+
+        .badge-back {
+            transform: rotateY(180deg);
+        }
+
+        .badge-container.flipped .badge-front {
+            transform: rotateY(180deg);
+        }
+
+        .badge-container.flipped .badge-back {
+            transform: rotateY(0deg);
         }
 
         .badge-header {
             text-align: center;
             margin-bottom: 0.5rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-color);
+            position: relative;
+            z-index: 1;
         }
 
         .badge-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--text-color);
-            font-weight: 500;
+            font-weight: 600;
+            margin: 0;
         }
 
         .badge-content {
             flex: 1;
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: column;
             align-items: center;
-            gap: 1rem;
-            margin: 5px;
-            padding: 10px;
-            z-index: 1;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+
+        .profile-pic-container {
+            width: 120px;
+            height: 120px;
+            margin: 0.5rem auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            transition: var(--transition);
+        }
+
+        .profile-pic-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+        }
+
+        .profile-pic-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .badge-info {
             width: 100%;
             text-align: left;
-            padding: 8px;
-            border-radius: 8px;
+            padding: 0.8rem;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .badge-info p {
-            margin-bottom: 0.5rem;
-            padding-bottom: 0.4rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 0.7rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         .badge-info p strong {
-            min-width: 100px;
+            min-width: 110px;
             display: inline-block;
             opacity: 0.8;
-            font-weight: normal;
+            font-weight: 500;
+            color: var(--primary-color);
         }
 
         .badge-info p span {
@@ -206,210 +357,7 @@
             text-align: right;
             flex: 1;
             margin-left: 10px;
-        }
-
-        .badge.template-1 {
-            background: var(--primary-color);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .badge.template-1::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 40%;
-            height: 100%;
-            background: white;
-            clip-path: polygon(100% 0, 100% 100%, 0 100%, 30% 0);
-            opacity: 0.1;
-        }
-
-        .badge.template-1 .badge-header {
-            position: relative;
-            z-index: 1;
-            background: white;
-            margin: 20px 20px 10px;
-            border-radius: 30px;
-            padding: 10px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 200px;
-        }
-
-        .badge.template-1 .clinic-header {
-            margin: 0;
-        }
-
-        .badge.template-1 .clinic-logo {
-            width: 40px;
-            height: 40px;
-            border: 2px solid #1e3799;
-            margin: 0;
-        }
-
-        .badge.template-1 #clinic-name {
-            color: #1e3799;
-            font-size: 1.2rem;
-            margin: 0;
-        }
-
-        .badge.template-1 .badge-content {
-            position: relative;
-            z-index: 1;
-            background: transparent;
-            margin: 10px;
-            padding: 15px;
-            box-shadow: none;
-            display: flex;
-            flex-direction: column-reverse;
-            gap: 1rem;
-        }
-
-        .badge.template-1 .badge-info {
-            background: transparent;
-            padding: 0;
-            margin-top: 10px;
-        }
-
-        .badge.template-1 .badge-info p {
-            color: white;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            font-size: 0.9rem;
-        }
-
-        .badge.template-1 .badge-info p:last-child {
-            border-bottom: none;
-        }
-
-        .badge.template-1 .badge-info strong {
-            color: white;
-            opacity: 0.8;
-            font-weight: normal;
-            min-width: 100px;
-            display: inline-block;
-        }
-
-        .badge.template-1 .badge-info span {
-            color: white;
-            font-weight: 500;
-        }
-
-        .badge.template-1 .profile-pic-container {
-            width: 100px;
-            height: 100px;
-            margin: 0.5rem auto;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .badge.template-1 .back-section {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-        }
-
-        .badge.template-1 .back-section h3 {
-            color: #1e3799;
-            border-bottom: 1px solid #1e3799;
-        }
-
-        .badge.template-1 .signature-line {
-            border-bottom: 1px dashed #1e3799;
-        }
-
-        .badge.template-2 {
-            background: linear-gradient(135deg, #2980b9, #2c3e50);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .badge.template-2::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
-            background-size: 4px 4px;
-        }
-
-        .badge.template-3 {
-            background: white;
-            border: none;
-            position: relative;
-        }
-
-        .badge.template-3::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 6px;
-            height: 100%;
-            background: var(--primary-color);
-        }
-
-        .badge.template-3 .badge-info p {
             color: var(--dark-gray);
-        }
-
-        .badge.template-4 {
-            background: var(--dark-gray);
-            color: white;
-            position: relative;
-        }
-
-        .badge.template-4::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 150px;
-            height: 150px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            transform: translate(50%, -50%);
-            opacity: 0.1;
-        }
-
-        .badge.template-5 {
-            background: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .badge.template-5::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-        }
-
-        .profile-pic-container {
-            width: 100px;
-            height: 100px;
-            margin: 0.5rem auto;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid var(--primary-color);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .profile-pic-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .signature-section {
@@ -436,18 +384,26 @@
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 0.8rem 2rem;
+            padding: 0.9rem 2rem;
             border-radius: var(--border-radius);
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
             width: 100%;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(30, 55, 153, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
             background: #3651d1;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 55, 153, 0.25);
+        }
+
+        .btn i {
+            margin-right: 8px;
         }
 
         .loading, .success-message {
@@ -467,6 +423,7 @@
             text-align: center;
             font-size: 0.8rem;
             z-index: 1;
+            color: #6c757d;
         }
 
         .badge-footer p {
@@ -474,61 +431,24 @@
             line-height: 1.3;
         }
 
-        .badge-container {
-            position: relative;
-            perspective: 1000px;
-            width: 350px;
-            height: 550px;
-            margin: 0 auto;
-        }
-
-        .badge {
-            background: white;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            backface-visibility: hidden;
-            transition: transform 0.6s;
-        }
-
-        .badge-front {
-            z-index: 2;
-            transform: rotateY(0deg);
-        }
-
-        .badge-back {
-            background: white;
-            transform: rotateY(180deg);
-        }
-
-        .badge-container.flipped .badge-front {
-            transform: rotateY(180deg);
-        }
-
-        .badge-container.flipped .badge-back {
-            transform: rotateY(0deg);
-        }
-
         .flip-button {
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: 0.85rem 1.5rem;
             border-radius: var(--border-radius);
             cursor: pointer;
             font-size: 1rem;
-            margin-bottom: 1rem;
-            transition: background-color 0.3s ease;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
             width: 100%;
+            box-shadow: 0 4px 15px rgba(30, 55, 153, 0.2);
         }
 
         .flip-button:hover {
             background: #3651d1;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 55, 153, 0.25);
         }
 
         .back-header {
@@ -541,39 +461,44 @@
         .back-content {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            padding: 8px;
+            gap: 0.8rem;
+            padding: 0.8rem;
         }
 
         .back-section {
-            padding: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
             border-radius: var(--border-radius);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .back-section h3 {
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+            font-size: 1rem;
             padding-bottom: 0.3rem;
-            border-bottom: 1px solid currentColor;
+            border-bottom: 1px solid var(--primary-color);
+            color: var(--primary-color);
         }
 
         .back-section p {
-            font-size: 0.8rem;
-            line-height: 1.2;
-            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+            line-height: 1.3;
+            margin-bottom: 0.4rem;
+            color: var(--dark-gray);
         }
 
         .signature-line {
-            margin-top: 0.3rem;
-            margin-bottom: 0.5rem;
+            margin-top: 0.4rem;
+            margin-bottom: 0.6rem;
             padding: 0.3rem 0;
         }
 
         .signature-line p {
-            margin-bottom: 0.3rem;
-            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--dark-gray);
         }
 
         .clinic-header {
@@ -582,16 +507,19 @@
             justify-content: center;
             gap: 0.75rem;
             margin-bottom: 1rem;
-            padding: 8px;
+            padding: 0.8rem;
             border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
         .clinic-logo {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             overflow: hidden;
             border: 2px solid currentColor;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .clinic-logo img {
@@ -601,101 +529,571 @@
         }
 
         #clinic-name, #clinic-name-back {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* Template styles */
+        .template-1 {
+            background: linear-gradient(135deg, var(--primary-color), #34495e);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, var(--primary-color), #34495e) 1;
+        }
+
+        .template-1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: white;
+            clip-path: polygon(100% 0, 100% 100%, 0 100%, 30% 0);
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .template-1 .badge-header {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 20px 20px 10px;
+            border-radius: 30px;
+            padding: 12px 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+        }
+
+        .template-1 .clinic-header {
             margin: 0;
         }
 
-        /* Adjust back page important notes */
-        .back-section:last-child {
-            margin-bottom: 0;
+        .template-1 .clinic-logo {
+            width: 45px;
+            height: 45px;
+            border: 2px solid white;
         }
 
-        .back-section:last-child p {
-            font-size: 0.75rem;
-            margin-bottom: 0.2rem;
-            line-height: 1.2;
+        .template-1 #clinic-name {
+            color: white;
+            font-size: 1.3rem;
+            margin: 0;
         }
 
-        /* Adjust clinic address text */
-        #clinic-address {
-            font-size: 0.8rem;
-            line-height: 1.2;
-            white-space: pre-line;
-            margin-bottom: 0.3rem;
+        .template-1 .badge-content {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+            margin: 10px;
+            padding: 15px;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .template-1 .badge-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .template-1 .badge-info p {
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .template-1 .badge-info p:last-child {
+            border-bottom: none;
+        }
+
+        .template-1 .badge-info strong {
+            color: rgba(255, 255, 255, 0.9);
+            opacity: 0.8;
+            font-weight: 500;
+            min-width: 110px;
+            display: inline-block;
+        }
+
+        .template-1 .badge-info span {
+            color: white;
+            font-weight: 500;
+        }
+
+        .template-1 .profile-pic-container {
+            width: 120px;
+            height: 120px;
+            margin: 0.5rem auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .template-1 .back-section {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .template-1 .back-section h3 {
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .template-1 .signature-line {
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.5);
+        }
+
+        .template-2 {
+            background: linear-gradient(135deg, #2980b9, #8e44ad);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, #2980b9, #8e44ad) 1;
+        }
+
+        .template-2::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
+            background-size: 8px 8px;
+            z-index: 0;
+        }
+
+        .template-3 {
+            background: white;
+            color: var(--dark-gray);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color)) 1;
+        }
+
+        .template-3::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            z-index: 0;
+        }
+
+        .template-3 .badge-header {
+            background: rgba(30, 55, 153, 0.1);
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin: 15px 15px 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+        }
+
+        .template-4 {
+            background: var(--dark-gray);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, #2c3e50, #34495e) 1;
+        }
+
+        .template-4::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 180px;
+            height: 180px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .template-5 {
+            background: white;
+            color: var(--dark-gray);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) 1;
+        }
+
+        .template-5::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            z-index: 1;
+        }
+
+        .template-6 {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, #e74c3c, #c0392b) 1;
+        }
+
+        .template-6::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="rgba(255,255,255,0.1)" d="M20 0l-5 10h10l-5-10zm10 20l10 5v10l-10-5h-10l10-5zm-20 0l-10 5v10l10-5h10l-10-5zm10 20l5 10h-10l5-10z"/></svg>');
+            z-index: 0;
+        }
+
+        .template-7 {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, #27ae60, #2ecc71) 1;
+        }
+
+        .template-7::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 0;
+        }
+
+        .template-8 {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, #3498db, #2980b9) 1;
+        }
+
+        .template-8::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+            background: white;
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .template-9 {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, #f39c12, #e67e22) 1;
+        }
+
+        .template-9::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
+            background-size: 6px 6px;
+            z-index: 0;
+        }
+
+        .template-10 {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-image: linear-gradient(135deg, #9b59b6, #8e44ad) 1;
+        }
+
+        .template-10::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="rgba(255,255,255,0.1)" d="M10 0c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/></svg>');
+            z-index: 0;
+        }
+
+        .instructions {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: var(--box-shadow);
+            border: 1px solid #e9ecef;
+        }
+
+        .instructions h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instructions ul {
+            list-style-type: none;
+            margin: 1.5rem 0;
+        }
+
+        .instructions li {
+            margin-bottom: 1rem;
+            padding-left: 30px;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .instructions li:before {
+            content: "✓";
+            color: var(--success-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            top: 0;
+            font-size: 1.2rem;
+        }
+
+        .download-section {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid #e9ecef;
+        }
+
+        .download-button {
+            background: linear-gradient(135deg, var(--primary-color), #3651d1);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(30, 55, 153, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .download-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(30, 55, 153, 0.35);
+        }
+
+        .download-button i {
+            font-size: 1.2rem;
+        }
+
+        #loading {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        #success {
+            color: var(--success-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        #loading.active {
+            display: block;
+            animation: pulse 1.5s infinite;
+        }
+
+        #success.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .template-selector-container {
+            margin-bottom: 2rem;
+        }
+
+        .template-selector-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>ID Badge Generator</h1>
+        <h1><i class="fas fa-id-badge"></i> Sehatra | Healthcare ID Badge Generator</h1>
+        <p>Create professional double-sided ID cards for medical staff with our free online tool</p>
+        <div style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
+            <i class="fas fa-copyright"></i> Powered by Sehatra Digital Solutions
+        </div>
     </div>
 
     <div class="container">
         <div class="form-section">
-            <div class="template-selector">
-                <div class="template-option active" onclick="changeTemplate('template-1')">
-                    Modern Blue
-                </div>
-                <div class="template-option" onclick="changeTemplate('template-2')">
-                    Gradient
-                </div>
-                <div class="template-option" onclick="changeTemplate('template-3')">
-                    Minimal
-                </div>
-                <div class="template-option" onclick="changeTemplate('template-4')">
-                    Dark Mode
-                </div>
-                <div class="template-option" onclick="changeTemplate('template-5')">
-                    Modern Accent
+            <div class="template-selector-container">
+                <div class="template-selector-title">Select Template</div>
+                <div class="template-selector">
+                    <div class="template-option active" onclick="changeTemplate('template-1')">
+                        <i class="fas fa-palette"></i> Modern Blue
+                    </div>
+                    <div class="template-option" onclick="changeTemplate('template-2')">
+                        <i class="fas fa-sliders-h"></i> Gradient
+                    </div>
+                    <div class="template-option" onclick="changeTemplate('template-3')">
+                        <i class="fas fa-border-all"></i> Minimal
+                    </div>
+                    <div class="template-option" onclick="changeTemplate('template-4')">
+                        <i class="fas fa-moon"></i> Dark Mode
+                    </div>
+                    <div class="template-option" onclick="changeTemplate('template-5')">
+                        <i class="fas fa-bolt"></i> Modern Accent
+                    </div>
+                    <div class="template-option" onclick="changeTemplate('template-6')">
+                        <i class="fas fa-fire"></i> Red Professional
+                    </div>
+                    <div class="template-option" onclick="changeTemplate('template-7')">
+                        <i class="fas fa-leaf"></i> Green Fresh
+                    </div>
+                    <div class="template-option" onclick="changeTemplate('template-8')">
+                        <i class="fas fa-water"></i> Ocean Blue
+                    </div>
+                    <div class="template-option" onclick="changeTemplate('template-9')">
+                        <i class="fas fa-sun"></i> Sunset Orange
+                    </div>
+                    <div class="template-option" onclick="changeTemplate('template-10')">
+                        <i class="fas fa-gem"></i> Purple Elegance
+                    </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="empNoInput">Employee No:</label>
+                <label for="empNoInput"><i class="fas fa-id-card"></i> Employee No:</label>
                 <input type="text" id="empNoInput" placeholder="Enter employee number" oninput="updateText('emp-no', this.value)">
             </div>
             <div class="form-group">
-                <label for="nameInput">Name:</label>
-                <input type="text" id="nameInput" placeholder="Enter name" oninput="updateText('name', this.value)">
+                <label for="nameInput"><i class="fas fa-user"></i> Name:</label>
+                <input type="text" id="nameInput" placeholder="Enter full name" oninput="updateText('name', this.value)">
             </div>
             <div class="form-group">
-                <label for="designationInput">Designation:</label>
+                <label for="designationInput"><i class="fas fa-briefcase"></i> Designation:</label>
                 <input type="text" id="designationInput" placeholder="Enter designation" oninput="updateText('designation', this.value)">
             </div>
             <div class="form-group">
-                <label for="issueDateInput">Date Of Issue:</label>
+                <label for="specialtyInput"><i class="fas fa-stethoscope"></i> Specialty:</label>
+                <input type="text" id="specialtyInput" placeholder="Enter specialty" oninput="updateText('specialty', this.value)">
+            </div>
+            <div class="form-group">
+                <label for="issueDateInput"><i class="fas fa-calendar-alt"></i> Date Of Issue:</label>
                 <input type="text" id="issueDateInput" placeholder="Enter issue date" oninput="updateText('issue-date', this.value)">
             </div>
             <div class="form-group">
-                <label for="validDateInput">Valid Until:</label>
+                <label for="validDateInput"><i class="fas fa-calendar-check"></i> Valid Until:</label>
                 <input type="text" id="validDateInput" placeholder="Enter valid until date" oninput="updateText('valid-date', this.value)">
             </div>
             <div class="form-group">
-                <label for="profilePic">Profile Picture:</label>
-                <input type="file" id="profilePic" accept="image/*" onchange="loadProfilePic(event)">
+                <label for="profilePic"><i class="fas fa-image"></i> Profile Picture:</label>
+                <div class="file-upload" onclick="document.getElementById('profilePic').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <div class="file-upload-text">Click to upload or drag and drop</div>
+                </div>
+                <input type="file" id="profilePic" accept="image/*" onchange="loadProfilePic(event)" style="display: none;">
             </div>
             <div class="form-group">
-                <label for="clinicLogo">Clinic Logo:</label>
-                <input type="file" id="clinicLogo" accept="image/*" onchange="loadClinicLogo(event)">
+                <label for="clinicLogo"><i class="fas fa-building"></i> Clinic Logo:</label>
+                <div class="file-upload" onclick="document.getElementById('clinicLogo').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <div class="file-upload-text">Click to upload or drag and drop</div>
+                </div>
+                <input type="file" id="clinicLogo" accept="image/*" onchange="loadClinicLogo(event)" style="display: none;">
                 <p id="logo-upload-text"></p>
             </div>
             <div class="form-group">
-                <label for="clinicNameInput">Clinic Name:</label>
+                <label for="clinicNameInput"><i class="fas fa-hospital"></i> Clinic Name:</label>
                 <input type="text" id="clinicNameInput" placeholder="Enter clinic name" oninput="updateText('clinic-name', this.value)">
             </div>
             <div class="form-group">
-                <label for="addressInput">Clinic Address:</label>
+                <label for="addressInput"><i class="fas fa-map-marker-alt"></i> Clinic Address:</label>
                 <textarea id="addressInput" rows="3" placeholder="Enter clinic address" oninput="updateText('clinic-address', this.value)"></textarea>
             </div>
             <div class="form-group">
-                <label for="empSigInput">Employee Signature:</label>
+                <label for="empSigInput"><i class="fas fa-signature"></i> Employee Signature:</label>
                 <input type="text" id="empSigInput" placeholder="Enter employee signature" oninput="updateText('emp-sig', this.value)">
             </div>
             <div class="form-group">
-                <label for="authSigInput">Authority Signature:</label>
+                <label for="authSigInput"><i class="fas fa-user-shield"></i> Authority Signature:</label>
                 <input type="text" id="authSigInput" placeholder="Enter authority signature" oninput="updateText('auth-sig', this.value)">
             </div>
-            <button class="flip-button" onclick="flipBadge()">Flip Badge</button>
+            <button class="flip-button" onclick="flipBadge()">
+                <i class="fas fa-exchange-alt"></i> Flip Badge
+            </button>
         </div>
 
         <div class="badge-container" id="badge-container">
@@ -709,15 +1107,16 @@
                     </div>
                 </div>
                 <div class="badge-content">
+                    <div class="profile-pic-container">
+                        <img id="profile-pic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Profile Picture">
+                    </div>
                     <div class="badge-info">
                         <p><strong>Employee No:</strong> <span id="emp-no">_________</span></p>
                         <p><strong>Name:</strong> <span id="name">_________</span></p>
                         <p><strong>Designation:</strong> <span id="designation">_________</span></p>
+                        <p><strong>Specialty:</strong> <span id="specialty">_________</span></p>
                         <p><strong>Date Of Issue:</strong> <span id="issue-date">_________</span></p>
                         <p><strong>Valid Until:</strong> <span id="valid-date">_________</span></p>
-                    </div>
-                    <div class="profile-pic-container">
-                        <img id="profile-pic" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" alt="Profile Picture">
                     </div>
                 </div>
             </div>
@@ -734,12 +1133,12 @@
 
                 <div class="back-content">
                     <div class="back-section">
-                        <h3>Clinic Address</h3>
+                        <h3><i class="fas fa-map-marker-alt"></i> Clinic Address</h3>
                         <p id="clinic-address">Enter clinic address</p>
                     </div>
 
                     <div class="back-section">
-                        <h3>Signatures</h3>
+                        <h3><i class="fas fa-signature"></i> Signatures</h3>
                         <div class="signature-line">
                             <p>Employee Signature:</p>
                             <p id="emp-sig">_________</p>
@@ -751,18 +1150,45 @@
                     </div>
 
                     <div class="back-section">
-                        <h3>Important Notes</h3>
+                        <h3><i class="fas fa-exclamation-circle"></i> Important Notes</h3>
                         <p>1. This ID card is the property of the HCE (Healthcare Establishment)</p>
                         <p>2. If found, please return to the respective HCE</p>
                         <p>3. This card is non-transferable</p>
+                        <p>4. Must be worn at all times during working hours</p>
+                        <p>5. Report lost cards immediately to HR department</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="instructions">
+        <h2><i class="fas fa-lightbulb"></i> How to Use This Generator</h2>
+        <ul>
+            <li>Fill in all the required information in the form on the left</li>
+            <li>Select a template that matches your healthcare establishment's branding</li>
+            <li>Upload a profile picture and clinic logo for a professional look</li>
+            <li>Click "Flip Badge" to view the back side of the ID card</li>
+            <li>Review your badge on both sides to ensure all information is correct</li>
+            <li>Click "Download ID Badge" to save your badge as a PDF file</li>
+            <li>Print the PDF on ID card stock or take it to a professional printer</li>
+        </ul>
+        
+        <h2><i class="fas fa-check-circle"></i> Compliance Guidelines</h2>
+        <ul>
+            <li>All healthcare staff must wear their ID badges while on duty</li>
+            <li>Badges must clearly display the employee's name, designation, and specialty</li>
+            <li>Photos should be professional and recent (within the last 6 months)</li>
+            <li>Badges should be properly signed by both the employee and issuing authority</li>
+            <li>Valid dates must be clearly displayed and regularly updated</li>
+            <li>Lost or damaged badges should be reported immediately</li>
+        </ul>
+    </div>
+
     <div class="download-section">
-        <button class="download-button" onclick="downloadBadge()">Download ID Badge</button>
+        <button class="download-button" onclick="downloadBadge()">
+            <i class="fas fa-download"></i> Download ID Badge
+        </button>
         <div id="loading">Generating badge...</div>
         <div id="success">Badge downloaded successfully!</div>
     </div>
@@ -770,6 +1196,48 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
+        // Initialize with current date
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            const formattedDate = today.toLocaleDateString('en-US', options);
+            
+            document.getElementById('issueDateInput').value = formattedDate;
+            
+            // Set default validity to 1 year from today
+            const oneYearLater = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+            const formattedValidDate = oneYearLater.toLocaleDateString('en-US', options);
+            document.getElementById('validDateInput').value = formattedValidDate;
+            
+            // Add drag and drop functionality
+            const fileUploads = document.querySelectorAll('.file-upload');
+            fileUploads.forEach(upload => {
+                upload.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    upload.style.backgroundColor = 'rgba(30, 55, 153, 0.1)';
+                    upload.querySelector('.file-upload-text').textContent = 'Drop to upload';
+                });
+                
+                upload.addEventListener('dragleave', () => {
+                    upload.style.backgroundColor = '';
+                    upload.querySelector('.file-upload-text').textContent = 'Click to upload or drag and drop';
+                });
+                
+                upload.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    upload.style.backgroundColor = '';
+                    upload.querySelector('.file-upload-text').textContent = 'Click to upload or drag and drop';
+                    
+                    const fileInput = upload.nextElementSibling;
+                    fileInput.files = e.dataTransfer.files;
+                    
+                    // Trigger the change event
+                    const event = new Event('change', { bubbles: true });
+                    fileInput.dispatchEvent(event);
+                });
+            });
+        });
+
         function loadProfilePic(event) {
             const output = document.getElementById('profile-pic');
             const file = event.target.files[0];
@@ -794,7 +1262,7 @@
                 reader.onload = function(e) {
                     output.src = e.target.result;
                     outputBack.src = e.target.result;
-                    uploadText.innerHTML = '<p>Logo uploaded successfully!</p>';
+                    uploadText.innerHTML = '<p style="color: #2ecc71; margin-top: 5px;"><i class="fas fa-check-circle"></i> Logo uploaded successfully!</p>';
                 }
                 reader.readAsDataURL(file);
             }
@@ -910,7 +1378,7 @@
                 );
 
                 // Save PDF
-                pdf.save('ID_Badge_Double_Sided.pdf');
+                pdf.save('Sehatra_ID_Badge_Double_Sided.pdf');
 
                 loading.classList.remove('active');
                 success.classList.add('active');
@@ -928,7 +1396,11 @@
         function changeTemplate(templateClass) {
             const frontBadge = document.getElementById('badge-front');
             const backBadge = document.getElementById('badge-back');
-            const templates = ['template-1', 'template-2', 'template-3', 'template-4', 'template-5'];
+            const templates = [
+                'template-1', 'template-2', 'template-3', 'template-4', 
+                'template-5', 'template-6', 'template-7', 'template-8', 
+                'template-9', 'template-10'
+            ];
             
             // Remove all template classes from both front and back
             templates.forEach(template => {
@@ -950,4 +1422,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
